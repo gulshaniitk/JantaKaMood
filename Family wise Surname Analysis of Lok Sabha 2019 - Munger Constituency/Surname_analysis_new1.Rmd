@@ -1,0 +1,256 @@
+---
+output:
+  html_document: default
+  word_document: default
+  pdf_document: default
+---
+# Surname Analysis of Munger LokSabha electoral data 2019
+
+### Our focus will be on 5 constituency of Munger i.e,    
+### 1. Munger   
+### 2. Jamalpur   
+### 3. Lakhisarai   
+### 4. Mokama   
+### 5. Badh   
+
+      
+          
+### We are provided the data in the .bak format. So, we extracted the excel file from the SQL server.   
+
+### Since excel files takes a lot of time to load in R stdio so, we converted it to the csv file using online excel to csv converter.
+   
+   
+## Loading the required libraries  
+
+```{r}
+library(tidyverse)
+library(humaniformat)
+library(magrittr)
+library(tools)
+
+```
+
+## Reading the data
+
+```{r}
+df_munger=read.csv("D:/Janta ka mood Intern/Munger_Constituency_2019_electoral/Munger_165.csv")
+df_jamalpur=read.csv("D:/Janta ka mood Intern/Munger_Constituency_2019_electoral/Jamalpur_166.csv")
+df_lakhisarai=read.csv("D:/Janta ka mood Intern/Munger_Constituency_2019_electoral/Lakhisarai_168.csv")
+df_mokama=read.csv("D:/Janta ka mood Intern/Munger_Constituency_2019_electoral/Mokama_178.csv")
+df_badh=read.csv("D:/Janta ka mood Intern/Munger_Constituency_2019_electoral/Badh_179.csv")
+```
+
+## Selecting the feature columns of Munger
+  
+```{r}
+colnames(df_munger)
+df_munger <- df_munger %>% select(PartNo,SectionNo,HouseNo,VoterNameEn,Sex,Age)
+df_munger <- df_munger %>% filter(Sex=="M",!is.na(VoterNameEn))
+head(df_munger)
+
+```
+## selecting the feature columns of Jamalpur  
+
+```{r}
+colnames(df_jamalpur)
+df_jamalpur <- df_jamalpur %>% select(PartNo, SectionNo, HouseNo, VoterNameEn, Sex, Age)
+df_jamalpur <- df_jamalpur %>% filter(Sex=="M",!is.na(VoterNameEn))
+head(df_jamalpur)
+```
+
+## selecting the feature columns of Lakhisarai  
+
+```{r}
+colnames(df_lakhisarai)
+df_lakhisarai <- df_lakhisarai %>% select(PartNo, SectionNo, HouseNo, VoterNameEn, Sex, Age)
+df_lakhisarai <- df_lakhisarai %>% filter(Sex=="M",!is.na(VoterNameEn))
+head(df_lakhisarai)
+
+```
+## selecting the feature columns of Mokama  
+
+```{r}
+colnames(df_mokama)
+df_mokama <- df_mokama %>% select(PartNo, SectionNo, HouseNo, VoterNameEn, Sex, Age)
+df_mokama <- df_mokama %>% filter(Sex=="M",!is.na(VoterNameEn))
+head(df_mokama)
+
+```
+## selecting the feature columns of Badh   
+```{r}
+colnames(df_badh)
+df_badh <- df_badh %>% select(PartNo, SectionNo, HouseNo, VoterNameEn, Sex, Age)
+df_badh <- df_badh %>% filter(Sex=="M",!is.na(VoterNameEn))
+head(df_badh)
+
+```
+## Extracting the last names of Munger 
+```{r}
+
+
+df_munger <- df_munger %>% add_column("FirstName"=NA,"MiddleName"=NA,"LastName"=NA)
+nam_munger <- parse_names(df_munger$VoterNameEn)
+df_munger$FirstName <- nam_munger$first_name
+df_munger$MiddleName <- nam_munger$middle_name
+df_munger$LastName <- nam_munger$last_name
+df_munger$LastName <- toTitleCase(tolower(df_munger$LastName))
+head(df_munger)
+```
+
+## Extracting the last names of Jamalpur   
+```{r}
+df_jamalpur <- df_jamalpur %>% add_column("FirstName"=NA,"MiddleName"=NA,"LastName"=NA)
+nam_jamalpur <- parse_names(df_jamalpur$VoterNameEn)
+df_jamalpur$FirstName <- nam_jamalpur$first_name
+df_jamalpur$MiddleName <- nam_jamalpur$middle_name
+df_jamalpur$LastName <- nam_jamalpur$last_name
+df_jamalpur$LastName <- toTitleCase(tolower(df_jamalpur$LastName))
+head(df_jamalpur)
+
+
+```
+## Extracting the last names of Lakhisarai   
+```{r}
+df_lakhisarai <- df_lakhisarai %>% add_column("FirstName"=NA,"MiddleName"=NA,"LastName"=NA)
+nam_lakhisarai <- parse_names(df_lakhisarai$VoterNameEn)
+df_lakhisarai$FirstName <- nam_lakhisarai$first_name
+df_lakhisarai$MiddleName <- nam_lakhisarai$middle_name
+df_lakhisarai$LastName <- nam_lakhisarai$last_name
+df_lakhisarai$LastName <- toTitleCase(tolower(df_lakhisarai$LastName))
+head(df_lakhisarai)
+
+```
+
+
+
+## Extracting the last names of Mokama   
+```{r}
+df_mokama <- df_mokama %>% add_column("FirstName"=NA,"MiddleName"=NA,"LastName"=NA)
+nam_mokama <- parse_names(df_mokama$VoterNameEn)
+df_mokama$FirstName <- nam_mokama$first_name
+df_mokama$MiddleName <- nam_mokama$middle_name
+df_mokama$LastName <- nam_mokama$last_name
+df_mokama$LastName <- toTitleCase(tolower(df_mokama$LastName))
+head(df_mokama)
+
+```
+
+## Extracting the last names of Badh   
+```{r}
+df_badh <- df_badh %>% add_column("FirstName"=NA,"MiddleName"=NA,"LastName"=NA)
+nam_badh <- parse_names(df_badh$VoterNameEn)
+df_badh$FirstName <- nam_badh$first_name
+df_badh$MiddleName <- nam_badh$middle_name
+df_badh$LastName <- nam_badh$last_name
+df_badh$LastName <- toTitleCase(tolower(df_badh$LastName))
+head(df_badh)
+
+```
+
+
+## Selecting the head of the family and counting the surname of munger   
+
+```{r}
+df_munger <- df_munger %>% filter(! LastName  %in% c("Kumar",NA))
+df2_munger <- df_munger %>% group_by(PartNo,SectionNo,HouseNo) %>% top_n(1,Age)
+head(df2_munger)
+df2_munger <- df2_munger %>% group_by(LastName) %>% mutate(count=n())
+surname_munger <- df2_munger %>% select(LastName,count)
+surname_munger <- unique(surname_munger)
+surname_munger<- surname_munger %>% arrange(desc(count))
+head(surname_munger)
+top_surname_munger <- head(surname_munger)
+
+label <- top_surname_munger$LastName[1:6]
+per <- top_surname_munger$count[1:6]/sum(top_surname_munger$count[1:6])*100
+per <- as.integer(per)
+pie(top_surname_munger$count[1:6],labels =label ,radius=1,main="Top 6 surnames of MUNGER",col=rainbow(6))
+legend("topright",inset=0.001,legend=per,cex=0.8, fill = rainbow(6))
+
+
+```
+## Selecting the head of the family and counting the surname of jamalpur   
+
+```{r}
+df_jamalpur <- df_jamalpur %>% filter(! LastName  %in% c("Kumar",NA))
+df2_jamalpur<- df_jamalpur %>% group_by(PartNo,SectionNo,HouseNo) %>% top_n(1,Age)
+head(df2_jamalpur)
+df2_jamalpur <- df2_jamalpur %>% group_by(LastName) %>% mutate(count=n())
+surname_jamalpur <- df2_jamalpur %>% select(LastName,count)
+surname_jamalpur <- unique(surname_jamalpur)
+surname_jamalpur<- surname_jamalpur %>% arrange(desc(count))
+head(surname_jamalpur)
+top_surname_jamalpur <- head(surname_jamalpur)
+
+label <- top_surname_jamalpur$LastName[1:6]
+per <- top_surname_jamalpur$count[1:6]/sum(top_surname_jamalpur$count[1:6])*100
+per <- as.integer(per)
+pie(top_surname_jamalpur$count[1:6],labels =label ,radius=1,main="Top 6 surnames of JAMALPUR",col=rainbow(6))
+legend("topright",inset=0.001,legend=per,cex=0.8, fill = rainbow(6))
+
+```
+
+## Selecting the head of the family and counting the surname of lakhisarai   
+```{r}
+
+df_lakhisarai <- df_lakhisarai %>% filter(! LastName  %in% c("Kumar",NA))
+df2_lakhisarai <- df_lakhisarai %>% group_by(PartNo,SectionNo,HouseNo) %>% top_n(1,Age)
+head(df2_lakhisarai)
+df2_lakhisarai <- df2_lakhisarai %>% group_by(LastName) %>% mutate(count=n())
+surname_lakhisarai <- df2_lakhisarai %>% select(LastName,count)
+surname_lakhisarai <- unique(surname_lakhisarai)
+surname_lakhisarai<- surname_lakhisarai %>% arrange(desc(count))
+head(surname_lakhisarai)
+top_surname_lakhisarai <- head(surname_lakhisarai)
+
+label <- top_surname_lakhisarai$LastName[1:6]
+per <- top_surname_lakhisarai$count[1:6]/sum(top_surname_lakhisarai$count[1:6])*100
+per <- as.integer(per)
+pie(top_surname_lakhisarai$count[1:6],labels =label ,radius=1,main="Top 6 surnames of LAKHISARAI",col=rainbow(6))
+legend("topright",inset=0.001,legend=per,cex=0.8, fill = rainbow(6))
+
+
+```
+
+## Selecting the head of the family and counting the surname of mokama   
+```{r}
+df_mokama <- df_mokama %>% filter(! LastName  %in% c("Kumar",NA))
+df2_mokama <- df_mokama %>% group_by(PartNo,SectionNo,HouseNo) %>% top_n(1,Age)
+head(df2_mokama)
+df2_mokama <- df2_mokama %>% group_by(LastName) %>% mutate(count=n())
+surname_mokama <- df2_mokama %>% select(LastName,count)
+surname_mokama <- unique(surname_mokama)
+surname_mokama<- surname_mokama %>% arrange(desc(count))
+head(surname_mokama)
+top_surname_mokama <- head(surname_mokama)
+
+label <- top_surname_mokama$LastName[1:6]
+per <- top_surname_mokama$count[1:6]/sum(top_surname_mokama$count[1:6])*100
+per <- as.integer(per)
+pie(top_surname_mokama$count[1:6],labels =label ,radius=1,main="Top 6 surnames of MOKAMA",col=rainbow(6))
+legend("topright",inset=0.001,legend=per,cex=0.8, fill = rainbow(6))
+
+```
+
+
+## Selecting the head of the family and counting the surname of badh   
+
+```{r}
+df_badh <- df_badh %>% filter(! LastName  %in% c("Kumar",NA))
+df2_badh <- df_badh %>% group_by(PartNo,SectionNo,HouseNo) %>% top_n(1,Age)
+head(df2_badh)
+df2_badh <- df2_badh %>% group_by(LastName) %>% mutate(count=n())
+surname_badh <- df2_badh %>% select(LastName,count)
+surname_badh <- unique(surname_badh)
+surname_badh<- surname_badh %>% arrange(desc(count))
+head(surname_badh)
+top_surname_badh <- head(surname_badh)
+
+label <- top_surname_badh$LastName[1:6]
+per <- top_surname_badh$count[1:6]/sum(top_surname_badh$count[1:6])*100
+per <- as.integer(per)
+pie(top_surname_badh$count[1:6],labels =label ,radius=1,main="Top 6 surnames of BADH",col=rainbow(6))
+legend("topright",inset=0.001,legend=per,cex=0.8, fill = rainbow(6))
+
+
+```
